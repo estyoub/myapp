@@ -20,10 +20,10 @@ jobs:
 
     - name: Copy files to Nginx server
       run: |
-        scp -r -o StrictHostKeyChecking=no ./* vagrant@192.168.56.18:/var/www/html
+        scp -P 2222 -r -o StrictHostKeyChecking=no ./* vagrant@localhost:/var/www/html
 
     - name: Restart Nginx
       run: |
-        ssh -o StrictHostKeyChecking=no vagrant@192.168.56.18 << 'EOF'
+        ssh -p 2222 -o StrictHostKeyChecking=no vagrant@localhost << 'EOF'
         sudo systemctl restart nginx
         EOF
