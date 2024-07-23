@@ -1,9 +1,9 @@
-name: Deploy to Nginx Server
+name: Deploy HTML Page
 
 on:
   push:
     branches:
-      - main
+      - main  # Change this if your default branch is different
 
 jobs:
   deploy:
@@ -11,19 +11,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
-    - name: Set up SSH
-      uses: webfactory/ssh-agent@v0.5.3
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-    - name: Copy files to Nginx server
-      run: |
-        scp -P 2222 -r -o StrictHostKeyChecking=no ./* vagrant@localhost:/var/www/html
-
-    - name: Restart Nginx
-      run: |
-        ssh -p 2222 -o StrictHostKeyChecking=no vagrant@localhost << 'EOF'
-        sudo systemctl restart nginx
-        EOF
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
