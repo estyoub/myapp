@@ -20,7 +20,7 @@ jobs:
 
     - name: Copy files to Nginx server
       run: |
-        scp -r -o StrictHostKeyChecking=no ./* vagrant@192.168.56.18:/var/www/myapp
+        scp -r -o StrictHostKeyChecking=no ./* vagrant@192.168.56.18:/var/www/html
 
     - name: Restart Nginx
       run: |
